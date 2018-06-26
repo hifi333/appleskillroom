@@ -17,7 +17,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface deviceSetting_UITabBarController : UITabBarController
+@interface gkt_UITabBarController : UITabBarController
 + (instancetype) getVCfromStoryboard;
 
 

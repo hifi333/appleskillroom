@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--vcs1-->
+        <!--login-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="loginviewcontrller_storyid" title="vcs1" id="BYZ-38-t0r" customClass="loginview_UIViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="loginviewcontrller_storyid" title="login" id="BYZ-38-t0r" customClass="loginview_UIViewController" sceneMemberID="viewController">
                     <view key="view" alpha="0.94999999999999996" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -80,10 +80,10 @@
             </objects>
             <point key="canvasLocation" x="1478.2608695652175" y="-153.2608695652174"/>
         </scene>
-        <!--tab1vc-->
+        <!--lessionlist-->
         <scene sceneID="Fjk-gt-i0t">
             <objects>
-                <viewController storyboardIdentifier="devicesettting_tab1" title="tab1vc" id="grX-tM-EDa" customClass="devicesettting_tab1" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="devicesettting_tab1" title="lessionlist" id="grX-tM-EDa" customClass="devicesettting_tab1" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UKw-HW-dcZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -95,10 +95,10 @@
             </objects>
             <point key="canvasLocation" x="2341.5999999999999" y="506.89655172413796"/>
         </scene>
-        <!--vcs2_tab-->
+        <!--gktvctabbar-->
         <scene sceneID="JyO-th-2lo">
             <objects>
-                <tabBarController storyboardIdentifier="deviceSetting_UITabBarController" title="vcs2_tab" id="Ru4-fd-ZsP" customClass="deviceSetting_UITabBarController" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="deviceSetting_UITabBarController" title="gktvctabbar" id="Ru4-fd-ZsP" customClass="gkt_UITabBarController" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ygb-fB-tQc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -112,45 +112,34 @@
             </objects>
             <point key="canvasLocation" x="2343.1999999999998" y="-152.47376311844079"/>
         </scene>
-        <!--DevicelistUI View Controller-->
+        <!--skillroom-->
         <scene sceneID="EBY-KQ-Zbu">
             <objects>
-                <viewController storyboardIdentifier="deviceliststoryid" id="0KM-dv-nDr" customClass="devicelist_UIViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="deviceliststoryid" title="skillroom" id="0KM-dv-nDr" customClass="skillroom_uiviewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="weh-ab-5QV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1bI-2K-xHS">
-                                <rect key="frame" x="42" y="506" width="341" height="128"/>
+                                <rect key="frame" x="18" y="507" width="341" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D42-fe-0lA">
-                                <rect key="frame" x="189" y="131" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="button_join:" destination="nAL-vG-LsJ" eventType="touchUpInside" id="07B-Si-ACI"/>
-                                    <action selector="button_joinleave:" destination="0KM-dv-nDr" eventType="touchUpInside" id="Uro-Fb-VjV"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="KHK-k7-4XE"/>
                     </view>
                     <connections>
-                        <outlet property="button_jointest" destination="D42-fe-0lA" id="p4u-MF-ocj"/>
                         <outlet property="samscrollview" destination="1bI-2K-xHS" id="ken-wQ-v5h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OO2-i9-bjX" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="nAL-vG-LsJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="24.637681159420293" y="32.608695652173914"/>
         </scene>
-        <!--tab2vc-->
+        <!--gktvc-->
         <scene sceneID="ud1-pj-2eK">
             <objects>
-                <viewController storyboardIdentifier="devicesettting_tab2" title="tab2vc" id="qiz-V7-wWh" customClass="devicesettting_tab2" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="devicesettting_tab2" title="gktvc" id="qiz-V7-wWh" customClass="devicesettting_tab2" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xnC-wp-z9z">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

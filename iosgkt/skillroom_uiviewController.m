@@ -9,14 +9,16 @@
 
 #import <Foundation/Foundation.h>
 #import <WebKit/WebKit.h>
-#import "devicelist_UIViewController.h"
+#import "skillroom_uiviewController.h"
 #import <Masonry/Masonry.h>
 #import "AppDelegate.h"
 #import "OnlineVideoSession.h"
 #import <AgoraRtcEngineKit/AgoraRtcEngineKit.h>
 #import <AgoraRtcCryptoLoader/AgoraRtcCryptoLoader.h>
+#import "AppDelegate.h"
 
-@interface devicelist_UIViewController ()<AgoraRtcEngineDelegate>
+
+@interface skillroom_uiviewController ()<AgoraRtcEngineDelegate, WKScriptMessageHandler>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *samscrollview;
 
@@ -34,14 +36,11 @@
 @property (strong, nonatomic) UIView *localVideoView;
 @property (strong, nonatomic) NSMutableArray<OnlineVideoSession *> *onlinevideoSessions;
 
-- (IBAction)button_joinleave:(id)sender;
-@property (weak, nonatomic) IBOutlet UIButton *button_jointest;
-
 @property BOOL  bejoin;
 
 @end
 
-@implementation devicelist_UIViewController
+@implementation skillroom_uiviewController
 
 static NSInteger streamID = 0;
 
@@ -61,6 +60,9 @@ static NSInteger streamID = 0;
     self.roomName =@"001";
     
     
+    [appDelegate.createdWeview_room.configuration.userContentController addScriptMessageHandler:self name:@"joinVideo"]; //添加注入js方法, oc与js端对应实现
+
+    
     [self.view addSubview:appDelegate.createdWeview_room];
     [appDelegate.createdWeview_room mas_makeConstraints:^(MASConstraintMaker *make) {
         
@@ -74,16 +76,16 @@ static NSInteger streamID = 0;
     [self loadWhiteboardJs];
     
     [self.view bringSubviewToFront:_samscrollview];
-    [self.view bringSubviewToFront:_button_jointest];
 
     
     
     [_samscrollview mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self.view.mas_left).offset(20);
-        make.right.equalTo(self.view.mas_right).offset(-20);
-        make.bottom.equalTo(self.view.mas_bottom).offset(-20);
-        make.height.mas_equalTo(64);
+        make.centerY.equalTo(self.view.mas_centerY);
+        make.right.equalTo(self.view.mas_right).offset(-10);
+        make.height.mas_equalTo(160);
+        make.width.mas_equalTo(100);
+
     }];
     
     
@@ -99,10 +101,20 @@ static NSInteger streamID = 0;
     [self loadAgoraKit];
     
     
+    
     //布局scrollview 里面的video window
+    
+    //开始设置scrollview
+//    _samscrollview.backgroundColor = [UIColor orangeColor];
+    _samscrollview.userInteractionEnabled = YES;
+    _samscrollview.scrollEnabled= YES;
+    _samscrollview.showsHorizontalScrollIndicator =YES;
+    
+    
     [self updateLayoutVideoViewScroll];
     
     
+
     
 }
 
@@ -123,6 +135,77 @@ static NSInteger streamID = 0;
     
 }
 
+
+#pragma mark - WKScriptMessageHandler
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
+    //oc原生处理:
+    
+    NSLog(@"call back from js call.");
+    NSLog(@"%@", message.name);
+    
+    if ([message.name isEqualToString:@"joinVideo"]) {
+        NSDictionary * messageDict = (NSDictionary *)message.body;
+        
+        NSLog(@"js call xcode api: joinVideo");
+        NSLog(@"%@", message.body);
+        NSLog(@"%@", messageDict[@"eclassroom"]);
+        NSLog(@"%@", messageDict[@"loginUserId"]);
+   
+        [self button_joinVideo];
+    }
+    
+    if ([message.name isEqualToString:@"muteSpeaker"]) {
+        NSDictionary * messageDict = (NSDictionary *)message.body;
+        
+        NSLog(@"js call xcode api: muteSpeaker");
+        NSLog(@"%@", message.body);
+        NSLog(@"%@", messageDict[@"loginUserId"]);
+        
+        [self button_joinVideo];
+    }
+    
+    
+    if ([message.name isEqualToString:@"mutecam"]) {
+        NSDictionary * messageDict = (NSDictionary *)message.body;
+        
+        NSLog(@"js call xcode api: mutecam");
+        NSLog(@"%@", message.body);
+        NSLog(@"%@", messageDict[@"loginUserId"]);
+        
+        [self button_joinVideo];
+    }
+    
+    
+    if ([message.name isEqualToString:@"quiteclassroom"]) {
+        NSDictionary * messageDict = (NSDictionary *)message.body;
+        
+        NSLog(@"js call xcode api: quiteclassroom");
+        NSLog(@"%@", message.body);
+        NSLog(@"%@", messageDict[@"loginUserId"]);
+        
+        [self button_joinVideo];
+    }
+    
+    
+    if ([message.name isEqualToString:@"hidevideowin"]) {
+        NSDictionary * messageDict = (NSDictionary *)message.body;
+        
+        NSLog(@"js call xcode api: hidevideowin");
+        NSLog(@"%@", message.body);
+        NSLog(@"%@", messageDict[@"loginUserId"]);
+        
+        [self button_joinVideo];
+    }
+    
+    
+    
+    
+    
+}
+    
+
+
+
 #pragma mark - Agora Media SDK
 - (void)loadAgoraKit {
     self.agoraKit = [AgoraRtcEngineKit sharedEngineWithAppId:self.appid delegate:self];
@@ -137,79 +220,67 @@ static NSInteger streamID = 0;
     
     
     //初始化，本地localpreivew 摄像头
-    OnlineVideoSession *localSession = [OnlineVideoSession createLocalSession];
-    [self.onlinevideoSessions addObject:localSession];
-    [self.agoraKit setupLocalVideo:localSession.rtcCanvas];
-    
-    [self.agoraKit startPreview];  //点亮自己的视频
-    
+//    OnlineVideoSession *localSession = [OnlineVideoSession createLocalSession];
+//    [self.onlinevideoSessions addObject:localSession];
+//     [self.agoraKit setupLocalVideo:localSession.rtcCanvas];
+//
+//    [self.agoraKit startPreview];  //点亮自己的视频
+//
     
 }
 
 
-
-
-- (IBAction)button_joinleave:(id)sender {
-    
+-(void) button_joinVideo {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-
-    
     int myuid = appDelegate.loginUserId.intValue;
-    
     if(_bejoin)
     {
         [self.agoraKit leaveChannel:^(AgoraChannelStats * _Nonnull stat) {
-            NSLog(@"leave channel ... ");
+            NSLog(@"leave channel, 我的头像也去掉了. ");
         }];
-        
-        for (OnlineVideoSession *oneSession in self.onlinevideoSessions) {
-            if(oneSession.remoteUid !=0) {  //自己的preview video 一直留着。。。
-                [oneSession.hostingUIView removeFromSuperview];
-                [self.onlinevideoSessions removeObject:oneSession];
-            }
-        }
-        [self updateLayoutVideoViewScroll];
-
-        
-        
-        
-        
-        _bejoin = NO;
+              _bejoin = NO;
     }else
     {
-    NSLog(@"I click to join  room with uid:%d" , myuid);
+        NSLog(@"I click to join  room with uid:%d" , myuid);
+        
+        //启动自己的视频
+            OnlineVideoSession *localSession = [OnlineVideoSession createLocalSession];
+            [self.onlinevideoSessions addObject:localSession];
+            [self.agoraKit setupLocalVideo:localSession.rtcCanvas];
+            [self.agoraKit startPreview];  //点亮自己的视频
 
-    //加入房间
-    int code = [self.agoraKit joinChannelByToken:nil channelId:self.roomName info:nil uid:myuid joinSuccess:nil];
-    if (code == 0) {
-        NSLog(@"I click to join  room with uid:");
-        [UIApplication sharedApplication].idleTimerDisabled = YES;
-    } else {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"%@", [NSString stringWithFormat:@"Join channel failed: %d", code]);
-        });
-    }
+        
+        
+        //加入房间
+        int code = [self.agoraKit joinChannelByToken:nil channelId:self.roomName info:nil uid:myuid joinSuccess:nil];
+        if (code == 0) {
+            [UIApplication sharedApplication].idleTimerDisabled = YES;
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSLog(@"%@", [NSString stringWithFormat:@"Join channel failed: %d", code]);
+            });
+        }
         
         _bejoin=YES;
     }
     
+    
 }
+
+
+
 
 
 -(void) updateLayoutVideoViewScroll{
     
-   
-    //开始设置scrollview
-    _samscrollview.backgroundColor = [UIColor orangeColor];
-    _samscrollview.userInteractionEnabled = YES;
-    _samscrollview.scrollEnabled= YES;
-    _samscrollview.showsHorizontalScrollIndicator =YES;
-    
-
-    
+  
     NSLog(@"update layout...");
     NSLog(@"%lu", (unsigned long)self.onlinevideoSessions.count);
-    
+
+    //动态设置这个scrollview 的高度， 系统提示错误。
+//    [_samscrollview mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.height.mas_equalTo(60* self.onlinevideoSessions.count);
+//    }];
     
     int k=0;
     for (OnlineVideoSession *session in self.onlinevideoSessions) {
@@ -217,10 +288,10 @@ static NSInteger streamID = 0;
         [_samscrollview addSubview: session.hostingUIView];
 
         [session.hostingUIView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.samscrollview.mas_left).offset(36*k + k*5);
-            make.top.equalTo(self.samscrollview.mas_top);
-            make.width.mas_equalTo(36);
-            make.height.mas_equalTo(64);
+            make.top.equalTo(self.samscrollview.mas_top).offset(60*k );
+            make.left.equalTo(self.samscrollview.mas_left);
+            make.width.mas_equalTo(100);
+            make.height.mas_equalTo(60);
         }];
         
         
@@ -228,7 +299,7 @@ static NSInteger streamID = 0;
 
     }
     
-    _samscrollview.contentSize = CGSizeMake(self.onlinevideoSessions.count*36 + k*5,64);
+    _samscrollview.contentSize = CGSizeMake(100, self.onlinevideoSessions.count*60);
 
     
 //
@@ -293,11 +364,18 @@ static NSInteger streamID = 0;
         [self.agoraKit setupRemoteVideo:newSession.rtcCanvas];
         [self updateLayoutVideoViewScroll];
         }
-    //    userSession.size = size;
 }
+
 
 - (void)rtcEngine:(AgoraRtcEngineKit *)engine firstLocalVideoFrameWithSize:(CGSize)size elapsed:(NSInteger)elapsed {
     NSLog(@"I joined room!");
+    [self updateLayoutVideoViewScroll];
+
+    
+    
+    
+    
+    
     //    if (self.videoSessions.count) {
     //        VideoSession *selfSession = self.videoSessions.firstObject;
     //        selfSession.size = size;
@@ -305,9 +383,28 @@ static NSInteger streamID = 0;
     //    }
 }
 
-- (void)rtcEngine:(AgoraRtcEngineKit * _Nonnull)engine didJoinChannel:(NSString * _Nonnull)channel withUid:(NSUInteger)uid elapsed:(NSInteger) elapsed{
+- (void)rtcEngine:(AgoraRtcEngineKit * _Nonnull)engine didLeaveChannelWithStats:(AgoraChannelStats * _Nonnull)stats{
+    NSLog(@"I leaved room!");
+
+    自己下线， 没有事件啊。。 有个事件， 操作这个sesionlist 也会出错呢，  然后重新布局也会出错。
     
-    NSLog(@"somebody remote didJoinChannel: %lu",(unsigned long)uid);
+    for (OnlineVideoSession *oneSession in self.onlinevideoSessions) {
+        // if(oneSession.remoteUid !=0) {  //自己的preview video 一直留着。。。
+        [oneSession.hostingUIView removeFromSuperview];
+        [self.onlinevideoSessions removeObject:oneSession];
+        //  }
+    }
+    [self updateLayoutVideoViewScroll];
+
+    
+    
+}
+
+
+
+
+- (void)rtcEngine:(AgoraRtcEngineKit * _Nonnull)engine didJoinChannel:(NSString * _Nonnull)channel withUid:(NSUInteger)uid elapsed:(NSInteger) elapsed{
+   
     
     
 }
@@ -317,6 +414,18 @@ static NSInteger streamID = 0;
     NSLog(@"somebody remote didJoinedOfUid: %lu",(unsigned long)uid);
     
     
+    NSLog(@"somebody remote didJoinChannel: %lu",(unsigned long)uid);
+    
+    BOOL isNewSession = YES;
+    for (OnlineVideoSession *oneSession in self.onlinevideoSessions) {
+        if(oneSession.remoteUid == uid)   isNewSession = NO;
+    }
+    if(isNewSession){
+        OnlineVideoSession *newSession = [[OnlineVideoSession alloc] initWithUid:uid];
+        [self.onlinevideoSessions addObject:newSession];
+        [self.agoraKit setupRemoteVideo:newSession.rtcCanvas];
+        [self updateLayoutVideoViewScroll];
+    }
     
     
     
@@ -356,20 +465,48 @@ static NSInteger streamID = 0;
 
 
 
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
-    //看下面的，自己可以调整，以达到你想要的效果，比如只能横屏显示:UIInterfaceOrientationLandscapeLeft，只能竖屏显示：UIInterfaceOrientationPortrait，
-    //或者直接返回YES,表示可以支持任何方向的旋转.
-    return (interfaceOrientation == UIInterfaceOrientationLandscapeRight);
-}
-
 + (instancetype) getVCfromStoryboard{
     
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    devicelist_UIViewController *nextVc = [storyboard instantiateViewControllerWithIdentifier:@"deviceliststoryid"];
+    skillroom_uiviewController *nextVc = [storyboard instantiateViewControllerWithIdentifier:@"deviceliststoryid"];
     
     return nextVc;
+}
+
+
+
+-(void)forceOrientationPortrait{
+    
+    //加上代理类里的方法，旋转屏幕可以达到强制竖屏的效果
+    AppDelegate *appdelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    appdelegate.isForcePortrait=YES;
+    [appdelegate application:[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:self.view.window];
+    
+}
+
+-(void)forceOrientationLandscape{
+    //这种方法，只能旋转屏幕不能达到强制横屏的效果
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+        SEL selector = NSSelectorFromString(@"setOrientation:");
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+        [invocation setSelector:selector];
+        [invocation setTarget:[UIDevice currentDevice]];
+        int val = UIInterfaceOrientationLandscapeLeft;
+        [invocation setArgument:&val atIndex:2];
+        [invocation invoke];
+    }
+    //加上代理类里的方法，旋转屏幕可以达到强制横屏的效果
+    AppDelegate *appdelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    appdelegate.isForceLandscape=YES;
+    [appdelegate application:[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:self.view.window];
+    
+}
+
+
+-(void)viewDidAppear:(BOOL)animated{
+//    [self forceOrientationPortrait];  //设置竖屏
+    [self forceOrientationLandscape]; //设置横屏
 }
 
 

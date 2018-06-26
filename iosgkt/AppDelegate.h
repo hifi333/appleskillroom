@@ -21,4 +21,15 @@
 @property (strong, nonatomic)  NSString *loginClassName;
 @property (strong, nonatomic)  NSString *workmodel;
 
+/**
+ *  是否强制横屏
+ */
+@property  BOOL isForceLandscape;
+/**
+ *  是否强制竖屏
+ */
+@property  BOOL isForcePortrait;
+
+
+
 @end

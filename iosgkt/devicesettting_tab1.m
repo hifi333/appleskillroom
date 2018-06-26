@@ -14,14 +14,12 @@
 #import "devicesettting_tab1.h"
 #import <WebKit/WebKit.h>
 #import <Masonry/Masonry.h>
-#import "devicelist_UIViewController.h"
+#import "skillroom_uiviewController.h"
 #import "AppDelegate.h"
 
 @interface devicesettting_tab1 () <WKNavigationDelegate,UIScrollViewDelegate,WKScriptMessageHandler>
 
 @property (strong, nonatomic)  WKWebView *createdh5Weview;
-
-@property (strong, nonatomic)  WKWebView *createdWeview_room;
 
 @property  BOOL Index_app_loadOK;
 
@@ -52,17 +50,11 @@
     wkWebConfig.preferences.javaScriptEnabled = YES;
     wkWebConfig.preferences.javaScriptCanOpenWindowsAutomatically = NO;
     
-    
-    
-    
     _createdh5Weview = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:wkWebConfig];
     [wkWebConfig.userContentController addScriptMessageHandler:self name:@"joinRoom"];//添加注入js方法, oc与js端对应实现
 
-    
     [self.view addSubview: _createdh5Weview];
-    
-    
-    
+
     [_createdh5Weview mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.top.equalTo(self.view.mas_top);
@@ -72,10 +64,8 @@
         
     }];
     
-    
-    
     _createdh5Weview.navigationDelegate = self;
-    
+
     NSString *value = [NSString stringWithFormat:@"http://122.152.210.96/lessionh5.html"];
     NSURL *url = [NSURL URLWithString:value];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -86,20 +76,26 @@
     
     
     
-    //load 下一个页面。。 准备下一个webview
-    _createdWeview_room = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:wkWebConfig];
+    
+    
+//    addScriptMessageHandler   要加载skillroom VC 上
+//_createdh5Weview 要放到global application 里，  没次skillroom VC 重建， 但要重用里面的webview_room
+    
+    //    //roomWebview  load 下一个页面。。 准备下一个webview
+    WKWebView *createdWeview_room  = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:wkWebConfig];
+    
     NSString *roomvalue = [NSString stringWithFormat:@"http://122.152.210.96/index_app.html"];
     NSURL *roomurl = [NSURL URLWithString:roomvalue];
     NSURLRequest *roomrequest = [NSURLRequest requestWithURL:roomurl];
-    [_createdWeview_room loadRequest:roomrequest];
-    
-    //_createdWeview_room.scrollView.delegate = self;
-    
+    [createdWeview_room loadRequest:roomrequest];
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    appDelegate.createdWeview_room = _createdWeview_room;
+    appDelegate.createdWeview_room = createdWeview_room;
+
+    appDelegate.createdWeview_room.navigationDelegate = self;  //url 加载完了，callback
     
-    appDelegate.createdWeview_room.navigationDelegate = self;
+    
+    
 }
 
 
@@ -160,11 +156,17 @@
             appDelegate.loginClassName = messageDict[@"eclassroom"];
             appDelegate.workmodel = messageDict[@"workmodel"];
             
-            devicelist_UIViewController *nextVc = devicelist_UIViewController.getVCfromStoryboard;
+            skillroom_uiviewController *nextVc = skillroom_uiviewController.getVCfromStoryboard;
             [self.navigationController pushViewController:nextVc  animated:(YES)];
         }
         
     }
+    
+    
+    
+    
+    
+    
     
 }
 

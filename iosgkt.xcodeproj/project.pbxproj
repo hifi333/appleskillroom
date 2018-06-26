@@ -12,10 +12,7 @@
 		076C59801DDDBC3500F813E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 076C597E1DDDBC3500F813E2 /* Main.storyboard */; };
 		076C59821DDDBC3500F813E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 076C59811DDDBC3500F813E2 /* Assets.xcassets */; };
 		076C59851DDDBC3500F813E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 076C59831DDDBC3500F813E2 /* LaunchScreen.storyboard */; };
-		076C59961DDDBDE300F813E2 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C59931DDDBDE200F813E2 /* SettingsViewController.m */; };
 		076C59971DDDBDE300F813E2 /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C59951DDDBDE300F813E2 /* ProfileCell.m */; };
-		076C599A1DDDBF1500F813E2 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C59991DDDBF1500F813E2 /* MainViewController.m */; };
-		076C599F1DDDBF2200F813E2 /* RoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C599C1DDDBF2200F813E2 /* RoomViewController.m */; };
 		076C59A01DDDBF2200F813E2 /* KeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C599E1DDDBF2200F813E2 /* KeyCenter.m */; };
 		076C59A51DDDBF3100F813E2 /* VideoSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C59A21DDDBF3100F813E2 /* VideoSession.m */; };
 		076C59A61DDDBF3100F813E2 /* VideoViewLayouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C59A41DDDBF3100F813E2 /* VideoViewLayouter.m */; };
@@ -29,9 +26,8 @@
 		07D29C5B1E9E1ED900C3583C /* AgoraRtcEngineKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D29C5A1E9E1ED900C3583C /* AgoraRtcEngineKit.framework */; };
 		07D29C5D1E9E1EFE00C3583C /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D29C5C1E9E1EFE00C3583C /* libresolv.tbd */; };
 		0FB4FB651FF1F979006C7AE3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FB4FB641FF1F979006C7AE3 /* SystemConfiguration.framework */; };
-		A707DC0620D2045100E07DFF /* SamRoomVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A707DC0520D2045100E07DFF /* SamRoomVC.m */; };
-		A707DC0C20D2052700E07DFF /* devicelist_UIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A707DC0B20D2052700E07DFF /* devicelist_UIViewController.m */; };
-		A707DC0F20D2056600E07DFF /* deviceSetting_UITabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = A707DC0E20D2056600E07DFF /* deviceSetting_UITabBarController.m */; };
+		A707DC0C20D2052700E07DFF /* skillroom_uiviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A707DC0B20D2052700E07DFF /* skillroom_uiviewController.m */; };
+		A707DC0F20D2056600E07DFF /* gkt_UITabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = A707DC0E20D2056600E07DFF /* gkt_UITabBarController.m */; };
 		A707DC1220D205A200E07DFF /* devicesettting_tab1.m in Sources */ = {isa = PBXBuildFile; fileRef = A707DC1120D205A200E07DFF /* devicesettting_tab1.m */; };
 		A707DC1520D205DF00E07DFF /* devicesettting_tab2.m in Sources */ = {isa = PBXBuildFile; fileRef = A707DC1420D205DF00E07DFF /* devicesettting_tab2.m */; };
 		A707DC1B20D3208800E07DFF /* loginview_UIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A707DC1A20D3208800E07DFF /* loginview_UIViewController.m */; };
@@ -66,14 +62,8 @@
 		076C59811DDDBC3500F813E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		076C59841DDDBC3500F813E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		076C59861DDDBC3500F813E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		076C59921DDDBDE200F813E2 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
-		076C59931DDDBDE200F813E2 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		076C59941DDDBDE300F813E2 /* ProfileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileCell.h; sourceTree = "<group>"; };
 		076C59951DDDBDE300F813E2 /* ProfileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileCell.m; sourceTree = "<group>"; };
-		076C59981DDDBF1500F813E2 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
-		076C59991DDDBF1500F813E2 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
-		076C599B1DDDBF2200F813E2 /* RoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomViewController.h; sourceTree = "<group>"; };
-		076C599C1DDDBF2200F813E2 /* RoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomViewController.m; sourceTree = "<group>"; };
 		076C599D1DDDBF2200F813E2 /* KeyCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyCenter.h; sourceTree = "<group>"; };
 		076C599E1DDDBF2200F813E2 /* KeyCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyCenter.m; sourceTree = "<group>"; };
 		076C59A11DDDBF3100F813E2 /* VideoSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoSession.h; sourceTree = "<group>"; };
@@ -93,12 +83,10 @@
 		07F531B61E28AE69009BFE58 /* iosgktUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iosgktUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FB4FB641FF1F979006C7AE3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		58E9FEA26A41A66EDF2641FC /* libPods-iosgkt.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iosgkt.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A707DC0420D2043400E07DFF /* SamRoomVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SamRoomVC.h; sourceTree = "<group>"; };
-		A707DC0520D2045100E07DFF /* SamRoomVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SamRoomVC.m; sourceTree = "<group>"; };
-		A707DC0A20D2050F00E07DFF /* devicelist_UIViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = devicelist_UIViewController.h; sourceTree = "<group>"; };
-		A707DC0B20D2052700E07DFF /* devicelist_UIViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = devicelist_UIViewController.m; sourceTree = "<group>"; };
-		A707DC0D20D2054D00E07DFF /* deviceSetting_UITabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = deviceSetting_UITabBarController.h; sourceTree = "<group>"; };
-		A707DC0E20D2056600E07DFF /* deviceSetting_UITabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = deviceSetting_UITabBarController.m; sourceTree = "<group>"; };
+		A707DC0A20D2050F00E07DFF /* skillroom_uiviewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = skillroom_uiviewController.h; sourceTree = "<group>"; };
+		A707DC0B20D2052700E07DFF /* skillroom_uiviewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = skillroom_uiviewController.m; sourceTree = "<group>"; };
+		A707DC0D20D2054D00E07DFF /* gkt_UITabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gkt_UITabBarController.h; sourceTree = "<group>"; };
+		A707DC0E20D2056600E07DFF /* gkt_UITabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = gkt_UITabBarController.m; sourceTree = "<group>"; };
 		A707DC1020D2058800E07DFF /* devicesettting_tab1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = devicesettting_tab1.h; sourceTree = "<group>"; };
 		A707DC1120D205A200E07DFF /* devicesettting_tab1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = devicesettting_tab1.m; sourceTree = "<group>"; };
 		A707DC1320D205CA00E07DFF /* devicesettting_tab2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = devicesettting_tab2.h; sourceTree = "<group>"; };
@@ -202,18 +190,10 @@
 		076C598F1DDDBCFE00F813E2 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				076C59981DDDBF1500F813E2 /* MainViewController.h */,
-				076C59991DDDBF1500F813E2 /* MainViewController.m */,
-				076C59921DDDBDE200F813E2 /* SettingsViewController.h */,
-				076C59931DDDBDE200F813E2 /* SettingsViewController.m */,
-				076C599B1DDDBF2200F813E2 /* RoomViewController.h */,
-				076C599C1DDDBF2200F813E2 /* RoomViewController.m */,
-				A707DC0420D2043400E07DFF /* SamRoomVC.h */,
-				A707DC0520D2045100E07DFF /* SamRoomVC.m */,
-				A707DC0A20D2050F00E07DFF /* devicelist_UIViewController.h */,
-				A707DC0B20D2052700E07DFF /* devicelist_UIViewController.m */,
-				A707DC0D20D2054D00E07DFF /* deviceSetting_UITabBarController.h */,
-				A707DC0E20D2056600E07DFF /* deviceSetting_UITabBarController.m */,
+				A707DC0A20D2050F00E07DFF /* skillroom_uiviewController.h */,
+				A707DC0B20D2052700E07DFF /* skillroom_uiviewController.m */,
+				A707DC0D20D2054D00E07DFF /* gkt_UITabBarController.h */,
+				A707DC0E20D2056600E07DFF /* gkt_UITabBarController.m */,
 				A707DC1020D2058800E07DFF /* devicesettting_tab1.h */,
 				A707DC1120D205A200E07DFF /* devicesettting_tab1.m */,
 				A707DC1320D205CA00E07DFF /* devicesettting_tab2.h */,
@@ -447,21 +427,17 @@
 				A7327ED41FC7C7DB00882882 /* MsgCell.m in Sources */,
 				076C59A01DDDBF2200F813E2 /* KeyCenter.m in Sources */,
 				A7327EDF1FC7D3D700882882 /* AGVideoPreProcessing.mm in Sources */,
-				076C59961DDDBDE300F813E2 /* SettingsViewController.m in Sources */,
 				076C59A61DDDBF3100F813E2 /* VideoViewLayouter.m in Sources */,
-				076C599F1DDDBF2200F813E2 /* RoomViewController.m in Sources */,
 				076C59971DDDBDE300F813E2 /* ProfileCell.m in Sources */,
 				076C59A51DDDBF3100F813E2 /* VideoSession.m in Sources */,
-				A707DC0F20D2056600E07DFF /* deviceSetting_UITabBarController.m in Sources */,
+				A707DC0F20D2056600E07DFF /* gkt_UITabBarController.m in Sources */,
 				076C59A91DDDC9FD00F813E2 /* VideoView.m in Sources */,
 				A707DC1E20D3284800E07DFF /* OnlineVideoSession.m in Sources */,
-				A707DC0C20D2052700E07DFF /* devicelist_UIViewController.m in Sources */,
+				A707DC0C20D2052700E07DFF /* skillroom_uiviewController.m in Sources */,
 				A7327ED11FC7C7C900882882 /* MsgTableView.m in Sources */,
 				076C597A1DDDBC3500F813E2 /* AppDelegate.m in Sources */,
 				A707DC1B20D3208800E07DFF /* loginview_UIViewController.m in Sources */,
 				A707DC1220D205A200E07DFF /* devicesettting_tab1.m in Sources */,
-				076C599A1DDDBF1500F813E2 /* MainViewController.m in Sources */,
-				A707DC0620D2045100E07DFF /* SamRoomVC.m in Sources */,
 				A7327ED71FC7C7EE00882882 /* MsgModel.m in Sources */,
 				A7327EDA1FC7C99C00882882 /* MessageType.m in Sources */,
 				A7327ECE1FC7B5E300882882 /* EncryptionType.m in Sources */,

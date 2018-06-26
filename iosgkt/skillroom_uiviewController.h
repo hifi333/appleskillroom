@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface devicelist_UIViewController : UIViewController
+@interface skillroom_uiviewController : UIViewController
 
 
 + (instancetype) getVCfromStoryboard;

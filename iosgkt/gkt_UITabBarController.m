@@ -10,17 +10,19 @@
 
 #import <Foundation/Foundation.h>
 
-#import "deviceSetting_UITabBarController.h"
+#import "gkt_UITabBarController.h"
 #import "devicesettting_tab1.h"
 
 #import "devicesettting_tab2.h"
+#import "AppDelegate.h"
 
-@interface deviceSetting_UITabBarController ()
+
+@interface gkt_UITabBarController ()
 @property (weak, nonatomic) IBOutlet UITabBar *mytabbar;
 
 @end
 
-@implementation deviceSetting_UITabBarController
+@implementation gkt_UITabBarController
 
 
 
@@ -108,10 +110,47 @@
     
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    deviceSetting_UITabBarController *nextVc = [storyboard instantiateViewControllerWithIdentifier:@"deviceSetting_UITabBarController"];
+    gkt_UITabBarController *nextVc = [storyboard instantiateViewControllerWithIdentifier:@"deviceSetting_UITabBarController"];
     
     return nextVc;
 }
+
+
+
+
+-(void)forceOrientationPortrait{
+    
+    //加上代理类里的方法，旋转屏幕可以达到强制竖屏的效果
+    AppDelegate *appdelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    appdelegate.isForcePortrait=YES;
+    [appdelegate application:[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:self.view.window];
+    
+}
+
+-(void)forceOrientationLandscape{
+    //这种方法，只能旋转屏幕不能达到强制横屏的效果
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+        SEL selector = NSSelectorFromString(@"setOrientation:");
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+        [invocation setSelector:selector];
+        [invocation setTarget:[UIDevice currentDevice]];
+        int val = UIInterfaceOrientationLandscapeLeft;
+        [invocation setArgument:&val atIndex:2];
+        [invocation invoke];
+    }
+    //加上代理类里的方法，旋转屏幕可以达到强制横屏的效果
+    AppDelegate *appdelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    appdelegate.isForceLandscape=YES;
+    [appdelegate application:[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:self.view.window];
+    
+}
+
+
+-(void)viewDidAppear:(BOOL)animated{
+    [self forceOrientationPortrait];  //设置竖屏
+//    [self forceOrientationLandscape]; //设置横屏
+}
+
 
 
 @end

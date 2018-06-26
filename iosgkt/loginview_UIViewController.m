@@ -10,8 +10,8 @@
 #import <Foundation/Foundation.h>
 
 #import "loginview_UIViewController.h"
-#import "devicelist_UIViewController.h"
-#import "deviceSetting_UITabBarController.h"
+#import "skillroom_uiviewController.h"
+#import "gkt_UITabBarController.h"
 #import <AFNetworking.h>
 #import <Masonry/Masonry.h>
 #import "AppDelegate.h"
@@ -27,8 +27,8 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     
-    _label_username.backgroundColor = [UIColor orangeColor];
-    _label_password.backgroundColor = [UIColor orangeColor];
+    _label_username.backgroundColor = [UIColor whiteColor];
+    _label_password.backgroundColor = [UIColor whiteColor];
     
     
     [_label_username mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -135,7 +135,7 @@
                 appDelegate.loginSessionToken = loginSessionToken;
                 
                 
-                deviceSetting_UITabBarController *nextVc = deviceSetting_UITabBarController.getVCfromStoryboard;
+                gkt_UITabBarController *nextVc = gkt_UITabBarController.getVCfromStoryboard;
                 [self.navigationController pushViewController:nextVc  animated:(YES)];
                 //    [self presentViewController:nextVc animated:(BOOL)YES completion:^{}];
                 
@@ -149,5 +149,41 @@
 }
 - (IBAction)button_join:(id)sender {
 }
+
+
+
+-(void)forceOrientationPortrait{
+    
+    //加上代理类里的方法，旋转屏幕可以达到强制竖屏的效果
+    AppDelegate *appdelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    appdelegate.isForcePortrait=YES;
+    [appdelegate application:[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:self.view.window];
+    
+}
+
+-(void)forceOrientationLandscape{
+    //这种方法，只能旋转屏幕不能达到强制横屏的效果
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+        SEL selector = NSSelectorFromString(@"setOrientation:");
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+        [invocation setSelector:selector];
+        [invocation setTarget:[UIDevice currentDevice]];
+        int val = UIInterfaceOrientationLandscapeLeft;
+        [invocation setArgument:&val atIndex:2];
+        [invocation invoke];
+    }
+    //加上代理类里的方法，旋转屏幕可以达到强制横屏的效果
+    AppDelegate *appdelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    appdelegate.isForceLandscape=YES;
+    [appdelegate application:[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:self.view.window];
+    
+}
+
+
+-(void)viewDidAppear:(BOOL)animated{
+    [self forceOrientationPortrait];  //设置竖屏
+//    [self forceOrientationLandscape]; //设置横屏
+}
+
 @end
 

@@ -17,12 +17,12 @@
 #import <UIKit/UIKit.h>
 
 @interface loginview_UIViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UILabel *forgetpassword_label;
+@property (weak, nonatomic) IBOutlet UILabel *newuserresiter_label;
+@property (weak, nonatomic) IBOutlet UILabel *welcomegkt_label;
 
 @property (weak, nonatomic) IBOutlet UITextField *text_username;
 @property (weak, nonatomic) IBOutlet UITextField *text_password;
-
-@property (weak, nonatomic) IBOutlet UILabel *label_username;
-@property (weak, nonatomic) IBOutlet UILabel *label_password;
 
 @property (weak, nonatomic) IBOutlet UIButton *button_login;
 

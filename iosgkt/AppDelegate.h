@@ -9,6 +9,7 @@
 
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
+#import "skillroom_uiviewController.h"
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
@@ -20,6 +21,10 @@
 @property (strong, nonatomic)  NSString *loginRole;
 @property (strong, nonatomic)  NSString *loginClassName;
 @property (strong, nonatomic)  NSString *workmodel;
+
+@property (strong, nonatomic)  skillroom_uiviewController *skillroom_singleVC;
+
+
 
 /**
  *  是否强制横屏

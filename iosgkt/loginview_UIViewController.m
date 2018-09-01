@@ -18,6 +18,11 @@
 
 @interface loginview_UIViewController ()
 
+@property (weak, nonatomic) IBOutlet UIImageView *username_image;
+
+@property (weak, nonatomic) IBOutlet UIImageView *password_image;
+@property (weak, nonatomic) IBOutlet UIImageView *gkttuzi_image;
+
 @end
 
 @implementation loginview_UIViewController
@@ -27,51 +32,77 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     
-    _label_username.backgroundColor = [UIColor whiteColor];
-    _label_password.backgroundColor = [UIColor whiteColor];
-    
-    
-    [_label_username mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).offset(100);
+    [_gkttuzi_image mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_top).offset(30);
         make.left.equalTo(self.view.mas_left).offset(10);
-        // make.centerY.equalTo(_label_username.mas_centerY);
-        make.width.mas_equalTo(100);
+        make.width.mas_equalTo(150);
+        make.height.mas_equalTo(150);
+
+    }];
+    
+    [_newuserresiter_label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_top).offset(50);
+        make.right.equalTo(self.view.mas_right).offset(-10);
+    }];
+    
+    
+    [_welcomegkt_label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self->_gkttuzi_image.mas_bottom).offset(30);
+        make.left.equalTo(self.view.mas_left).offset(10);
+        
+    }];
+    
+    
+    
+    [_username_image mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self->_welcomegkt_label.mas_top).offset(30);
+        make.left.equalTo(self.view.mas_left).offset(10);
+        make.width.mas_equalTo(35);
         make.height.mas_equalTo(35);
         
     }];
     
     
     [_text_username mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self->_label_username.mas_right).offset(1);
-        make.top.equalTo(self->_label_username.mas_top);
+        make.left.equalTo(self->_username_image.mas_right).offset(1);
+        make.top.equalTo(self->_username_image.mas_top);
         make.height.mas_equalTo(35);
         make.right.equalTo(self.view.mas_right).offset(-10);
     }];
     
-    
-    [_label_password mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self->_label_username.mas_bottom).offset(20);
-        make.left.equalTo(self->_label_username.mas_left);
-        make.width.mas_equalTo(100);
+
+    [_password_image mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self->_username_image.mas_bottom).offset(20);
+        make.left.equalTo(self->_username_image.mas_left);
+        make.width.mas_equalTo(35);
         make.height.mas_equalTo(35);
     }];
-    
+
     [_text_password mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self->_text_username.mas_left);
-        make.top.equalTo(self->_label_password.mas_top);
+        make.top.equalTo(self->_password_image.mas_top);
         make.height.mas_equalTo(35);
         make.right.equalTo(self->_text_username.mas_right);
     }];
-    
-    
+
+
     [_button_login mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self->_label_password.mas_left);
-        make.top.equalTo(self->_label_password.mas_bottom).offset(30);
+
+        make.left.equalTo(self->_password_image.mas_left);
+        make.top.equalTo(self->_password_image.mas_bottom).offset(30);
         make.height.mas_equalTo(45);
         make.right.equalTo(self->_text_password.mas_right);
-        
+
     }];
+
+    
+    [_forgetpassword_label mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_button_login.mas_left);
+        make.top.equalTo(self->_button_login.mas_bottom).offset(30);
+    }];
+    
+    
     
     
 }

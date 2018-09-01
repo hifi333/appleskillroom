@@ -16,7 +16,7 @@
 #import <AgoraRtcEngineKit/AgoraRtcEngineKit.h>
 #import <AgoraRtcCryptoLoader/AgoraRtcCryptoLoader.h>
 #import "AppDelegate.h"
-
+#import "gkt_UITabBarController.h"
 
 @interface skillroom_uiviewController ()<AgoraRtcEngineDelegate, WKScriptMessageHandler>
 
@@ -37,6 +37,8 @@
 @property (strong, nonatomic) NSMutableArray<OnlineVideoSession *> *onlinevideoSessions;
 
 @property BOOL  bejoin;
+@property BOOL  beSpeakerMute;
+@property BOOL  beCamMute;
 
 @end
 
@@ -44,25 +46,56 @@
 
 static NSInteger streamID = 0;
 
+
+-(void) viewWillAppear:(BOOL)animated{
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+
+    NSLog(@"%@ from viewWillAppear ", _samStoryVCSingleTonInstanceTest);
+    NSLog(@"%@ from viewWillAppear： load new classroom: ", appDelegate.loginClassName);
+
+    
+    [self loadWhiteboardJs];  //webview 布局OK了 ，开始load DOM for 新的classroom appDelegate.loginClassName
+    
+
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     // [self.navigationController setNavigationBarHidden:(YES) animated:(YES)];
 
+    
+    NSLog(@"%@", _samStoryVCSingleTonInstanceTest);
+    
+    
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     _bejoin = NO;
-    
+    _beSpeakerMute =NO;
+    _beCamMute =NO;
 
     self.appid = @"665da0479681474191c7ef70058d2651";
     self.videoProfile = AgoraVideoProfileLandscape360P;
     self.encrypType = @"aes-128-xts";  // @"aes-256-xts"
     self.encrypSecret =@"samsecret";
-    self.roomName =@"001";
+    self.roomName = appDelegate.loginClassName;
     
-    
-    [appDelegate.createdWeview_room.configuration.userContentController addScriptMessageHandler:self name:@"joinVideo"]; //添加注入js方法, oc与js端对应实现
 
-    
+//    
+//    [appDelegate.createdWeview_room.configuration.userContentController  removeScriptMessageHandlerForName:@"joinVideo"];
+//    [appDelegate.createdWeview_room.configuration.userContentController  removeScriptMessageHandlerForName:@"muteSpeaker"];
+//    [appDelegate.createdWeview_room.configuration.userContentController  removeScriptMessageHandlerForName:@"mutecam"];
+//    [appDelegate.createdWeview_room.configuration.userContentController  removeScriptMessageHandlerForName:@"quiteclassroom"];
+//    [appDelegate.createdWeview_room.configuration.userContentController  removeScriptMessageHandlerForName:@"hidevideowin"];
+//
+//    [appDelegate.createdWeview_room.configuration.userContentController addScriptMessageHandler:self name:@"joinVideo"]; //添加注入js方法, oc与js端对应实现
+//    [appDelegate.createdWeview_room.configuration.userContentController addScriptMessageHandler:self name:@"muteSpeaker"]; //添加注入js方法, oc与js端对应实现
+//    [appDelegate.createdWeview_room.configuration.userContentController addScriptMessageHandler:self name:@"mutecam"]; //添加注入js方法, oc与js端对应实现
+//    [appDelegate.createdWeview_room.configuration.userContentController addScriptMessageHandler:self name:@"quiteclassroom"]; //添加注入js方法, oc与js端对应实现
+//    [appDelegate.createdWeview_room.configuration.userContentController addScriptMessageHandler:self name:@"hidevideowin"]; //添加注入js方法, oc与js端对应实现
+
+    [appDelegate.createdWeview_room removeFromSuperview];
+
     [self.view addSubview:appDelegate.createdWeview_room];
     [appDelegate.createdWeview_room mas_makeConstraints:^(MASConstraintMaker *make) {
         
@@ -73,7 +106,8 @@ static NSInteger streamID = 0;
         
     }];
     
-    [self loadWhiteboardJs];
+    [self loadWhiteboardJs];  //webview 布局OK了 ，开始load DOM
+
     
     [self.view bringSubviewToFront:_samscrollview];
 
@@ -129,6 +163,7 @@ static NSInteger streamID = 0;
     NSLog(@"%@", jsString);
     
     [appDelegate.createdWeview_room evaluateJavaScript:jsString completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+        NSLog(@"执行webView render cavas,js 出错:");
         NSLog(@"value: %@ error: %@", response, error);
     }];
     
@@ -161,7 +196,7 @@ static NSInteger streamID = 0;
         NSLog(@"%@", message.body);
         NSLog(@"%@", messageDict[@"loginUserId"]);
         
-        [self button_joinVideo];
+        [self button_muteSpeaker];
     }
     
     
@@ -172,7 +207,7 @@ static NSInteger streamID = 0;
         NSLog(@"%@", message.body);
         NSLog(@"%@", messageDict[@"loginUserId"]);
         
-        [self button_joinVideo];
+        [self button_mutecam];
     }
     
     
@@ -183,7 +218,7 @@ static NSInteger streamID = 0;
         NSLog(@"%@", message.body);
         NSLog(@"%@", messageDict[@"loginUserId"]);
         
-        [self button_joinVideo];
+        [self button_quiteclassroom];
     }
     
     
@@ -194,7 +229,7 @@ static NSInteger streamID = 0;
         NSLog(@"%@", message.body);
         NSLog(@"%@", messageDict[@"loginUserId"]);
         
-        [self button_joinVideo];
+        [self button_hidevideowin];
     }
     
     
@@ -228,6 +263,47 @@ static NSInteger streamID = 0;
 //
     
 }
+-(void) button_muteSpeaker {
+    
+    [self.agoraKit muteLocalAudioStream:!_beSpeakerMute];
+    
+    _beSpeakerMute =!_beSpeakerMute;
+
+}
+
+-(void) button_mutecam {
+
+    [self.agoraKit muteLocalVideoStream:!_beCamMute];
+    _beCamMute = !_beCamMute;
+
+}
+
+
+
+-(void) button_quiteclassroom {
+    
+    NSLog(@"%d", self.navigationController.viewControllers.count);
+
+    
+   for (UIViewController *controller in self.navigationController.viewControllers) {
+       
+       NSLog(@"%@", controller.class);
+        if ([controller isKindOfClass:[gkt_UITabBarController class]]) {
+            [self.navigationController popToViewController:controller animated:YES];
+        }
+}
+}
+
+-(void) button_hidevideowin {
+
+    [_samscrollview setHidden:(!_samscrollview.isHidden)];
+    
+}
+
+
+
+
+
 
 
 -(void) button_joinVideo {
@@ -237,6 +313,16 @@ static NSInteger streamID = 0;
     {
         [self.agoraKit leaveChannel:^(AgoraChannelStats * _Nonnull stat) {
             NSLog(@"leave channel, 我的头像也去掉了. ");
+
+            
+            for (OnlineVideoSession *oneSession in self.onlinevideoSessions) {
+                [oneSession.hostingUIView removeFromSuperview]; //当前所有视频窗口都要移除父亲依赖
+            }
+            [self.onlinevideoSessions removeAllObjects];  //清除当前所有窗口视频对象
+
+            [self updateLayoutVideoViewScroll];  //清楚视频scrollview的内容。。  就是退出视频来， 自己的视频， 别人的视频， 都不看了。
+
+            
         }];
               _bejoin = NO;
     }else
@@ -249,7 +335,8 @@ static NSInteger streamID = 0;
             [self.agoraKit setupLocalVideo:localSession.rtcCanvas];
             [self.agoraKit startPreview];  //点亮自己的视频
 
-        
+            [self updateLayoutVideoViewScroll];
+
         
         //加入房间
         int code = [self.agoraKit joinChannelByToken:nil channelId:self.roomName info:nil uid:myuid joinSuccess:nil];
@@ -349,8 +436,46 @@ static NSInteger streamID = 0;
 
 #pragma mark - <AgoraRtcEngineDelegate>
 
+
+
+
+- (void)rtcEngine:(AgoraRtcEngineKit * _Nonnull)engine didJoinChannel:(NSString * _Nonnull)channel withUid:(NSUInteger)uid elapsed:(NSInteger) elapsed{
+    NSLog(@"local didJoinChannel: %lu",(unsigned long)uid);
+    
+    //不知为啥， 本地的视频操作没有触发这里啊。
+    
+}
+
+
+
+- (void)rtcEngine:(AgoraRtcEngineKit *)engine firstLocalVideoFrameWithSize:(CGSize)size elapsed:(NSInteger)elapsed {
+    NSLog(@"local, I joined room and videoframing:firstLocalVideoFrameWithSize");
+    
+    //不知为啥， 本地的视频操作没有触发这里啊。
+
+    
+  //  [self updateLayoutVideoViewScroll];
+
+    //    if (self.videoSessions.count) {
+    //        VideoSession *selfSession = self.videoSessions.firstObject;
+    //        selfSession.size = size;
+    //        [self updateInterfaceWithSessions:self.videoSessions targetSize:self.containerView.frame.size animation:NO];
+    //    }
+}
+
+- (void)rtcEngine:(AgoraRtcEngineKit * _Nonnull)engine didLeaveChannelWithStats:(AgoraChannelStats * _Nonnull)stats{
+    NSLog(@"local didLeaveChannelWithStats");
+
+    //自己下线， 没有事件啊。。 有个事件没有发出来，
+    //不知为啥， 本地的视频操作没有触发这里啊。
+
+}
+
+
+
+
 - (void)rtcEngine:(AgoraRtcEngineKit *)engine firstRemoteVideoDecodedOfUid:(NSUInteger)uid size:(CGSize)size elapsed:(NSInteger)elapsed {
-    NSLog(@"somebody remote firstRemoteVideoDecodedOfUid come%lu",(unsigned long)uid);
+    NSLog(@"remote firstRemoteVideoDecodedOfUid firstframing come%lu",(unsigned long)uid);
     
     NSLog(@"videiosize: %f,%lf",size.width,size.height);
     
@@ -363,58 +488,12 @@ static NSInteger streamID = 0;
         [self.onlinevideoSessions addObject:newSession];
         [self.agoraKit setupRemoteVideo:newSession.rtcCanvas];
         [self updateLayoutVideoViewScroll];
-        }
-}
-
-
-- (void)rtcEngine:(AgoraRtcEngineKit *)engine firstLocalVideoFrameWithSize:(CGSize)size elapsed:(NSInteger)elapsed {
-    NSLog(@"I joined room!");
-    [self updateLayoutVideoViewScroll];
-
-    
-    
-    
-    
-    
-    //    if (self.videoSessions.count) {
-    //        VideoSession *selfSession = self.videoSessions.firstObject;
-    //        selfSession.size = size;
-    //        [self updateInterfaceWithSessions:self.videoSessions targetSize:self.containerView.frame.size animation:NO];
-    //    }
-}
-
-- (void)rtcEngine:(AgoraRtcEngineKit * _Nonnull)engine didLeaveChannelWithStats:(AgoraChannelStats * _Nonnull)stats{
-    NSLog(@"I leaved room!");
-
-    自己下线， 没有事件啊。。 有个事件， 操作这个sesionlist 也会出错呢，  然后重新布局也会出错。
-    
-    for (OnlineVideoSession *oneSession in self.onlinevideoSessions) {
-        // if(oneSession.remoteUid !=0) {  //自己的preview video 一直留着。。。
-        [oneSession.hostingUIView removeFromSuperview];
-        [self.onlinevideoSessions removeObject:oneSession];
-        //  }
     }
-    [self updateLayoutVideoViewScroll];
-
-    
-    
 }
-
-
-
-
-- (void)rtcEngine:(AgoraRtcEngineKit * _Nonnull)engine didJoinChannel:(NSString * _Nonnull)channel withUid:(NSUInteger)uid elapsed:(NSInteger) elapsed{
-   
-    
-    
-}
-
 
 - (void)rtcEngine:(AgoraRtcEngineKit * )engine didJoinedOfUid:(NSUInteger)uid elapsed:(NSInteger)elapsed{
-    NSLog(@"somebody remote didJoinedOfUid: %lu",(unsigned long)uid);
+    NSLog(@"remote didJoinedOfUid: %lu",(unsigned long)uid);
     
-    
-    NSLog(@"somebody remote didJoinChannel: %lu",(unsigned long)uid);
     
     BOOL isNewSession = YES;
     for (OnlineVideoSession *oneSession in self.onlinevideoSessions) {
@@ -433,7 +512,7 @@ static NSInteger streamID = 0;
 }
 
 - (void)rtcEngine:(AgoraRtcEngineKit *)engine didOfflineOfUid:(NSUInteger)uid reason:(AgoraUserOfflineReason)reason {
-    NSLog(@"somebody remote didOfflineOfUid: %lu",(unsigned long)uid);
+    NSLog(@"remote didOfflineOfUid: %lu",(unsigned long)uid);
     
     
     for (OnlineVideoSession *oneSession in self.onlinevideoSessions) {
@@ -446,23 +525,6 @@ static NSInteger streamID = 0;
     
     
 }
-
-- (void)rtcEngine:(AgoraRtcEngineKit *)engine didVideoMuted:(BOOL)muted byUid:(NSUInteger)uid {
-}
-
--(void)rtcEngine:(AgoraRtcEngineKit *)engine receiveStreamMessageFromUid:(NSUInteger)uid streamId:(NSInteger)streamId data:(NSData *)data {
-    //    NSString *message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    //    [self.msgTableView appendMsgToTableViewWithMsg:message msgType:MsgTypeChat];
-}
-
-- (void)rtcEngineConnectionDidInterrupted:(AgoraRtcEngineKit *)engine {
-    //    [self.msgTableView appendMsgToTableViewWithMsg:@"Connection Did Interrupted" msgType:MsgTypeError];
-}
-
-- (void)rtcEngineConnectionDidLost:(AgoraRtcEngineKit *)engine {
-    //    [self.msgTableView appendMsgToTableViewWithMsg:@"Connection Did Lost" msgType:MsgTypeError];
-}
-
 
 
 + (instancetype) getVCfromStoryboard{
@@ -508,6 +570,7 @@ static NSInteger streamID = 0;
 //    [self forceOrientationPortrait];  //设置竖屏
     [self forceOrientationLandscape]; //设置横屏
 }
+
 
 
 @end

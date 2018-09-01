@@ -48,7 +48,7 @@
     
     [self setTabBarItem:tab1.tabBarItem
                   Title:@"首页"
-          withTitleSize:24.0
+          withTitleSize:18.0
             andFoneName:@"Marion-Italic"
           selectedImage:@"orderError"
          withTitleColor:[UIColor blueColor]
@@ -59,7 +59,7 @@
     
     [self setTabBarItem:tab2.tabBarItem
                   Title:@"设置"
-          withTitleSize:24.0
+          withTitleSize:18.0
             andFoneName:@"Marion-Italic"
           selectedImage:@"orderError"
          withTitleColor:[UIColor blueColor]
@@ -147,8 +147,8 @@
 
 
 -(void)viewDidAppear:(BOOL)animated{
-    [self forceOrientationPortrait];  //设置竖屏
-//    [self forceOrientationLandscape]; //设置横屏
+//    [self forceOrientationPortrait];  //设置竖屏
+    [self forceOrientationLandscape]; //设置横屏
 }
 
 

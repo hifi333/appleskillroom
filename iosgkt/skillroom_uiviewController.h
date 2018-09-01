@@ -18,6 +18,7 @@
 
 @interface skillroom_uiviewController : UIViewController
 
+@property (strong, nonatomic) NSString *samStoryVCSingleTonInstanceTest;
 
 + (instancetype) getVCfromStoryboard;
 

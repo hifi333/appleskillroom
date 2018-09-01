@@ -129,6 +129,23 @@
         _Index_app_loadOK = YES;
         
         NSLog(@"index_app js 加载完成。");
+        
+
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//        skillroom_uiviewController *nextVc = skillroom_uiviewController.getVCfromStoryboard;
+
+        if(appDelegate.skillroom_singleVC ==nil)
+            appDelegate.skillroom_singleVC = skillroom_uiviewController.getVCfromStoryboard;
+        
+        
+        [appDelegate.createdWeview_room.configuration.userContentController addScriptMessageHandler:appDelegate.skillroom_singleVC name:@"joinVideo"]; //添加注入js方法, oc与js端对应实现
+        [appDelegate.createdWeview_room.configuration.userContentController addScriptMessageHandler:appDelegate.skillroom_singleVC name:@"muteSpeaker"]; //添加注入js方法, oc与js端对应实现
+        [appDelegate.createdWeview_room.configuration.userContentController addScriptMessageHandler:appDelegate.skillroom_singleVC name:@"mutecam"]; //添加注入js方法, oc与js端对应实现
+        [appDelegate.createdWeview_room.configuration.userContentController addScriptMessageHandler:appDelegate.skillroom_singleVC name:@"quiteclassroom"]; //添加注入js方法, oc与js端对应实现
+        [appDelegate.createdWeview_room.configuration.userContentController addScriptMessageHandler:appDelegate.skillroom_singleVC name:@"hidevideowin"]; //添加注入js方法, oc与js端对应实现
+
+        
+        
     }
     
 }
@@ -137,7 +154,7 @@
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
     //oc原生处理:
     
-    NSLog(@"call back from js call.");
+    NSLog(@"call back from js Lession List H5 call.");
     NSLog(@"%@", message.name);
     
     if ([message.name isEqualToString:@"joinRoom"]) {
@@ -156,8 +173,11 @@
             appDelegate.loginClassName = messageDict[@"eclassroom"];
             appDelegate.workmodel = messageDict[@"workmodel"];
             
-            skillroom_uiviewController *nextVc = skillroom_uiviewController.getVCfromStoryboard;
-            [self.navigationController pushViewController:nextVc  animated:(YES)];
+           
+            appDelegate.skillroom_singleVC.samStoryVCSingleTonInstanceTest = @"outside data from sam click joinroom";
+
+            NSLog(@"push the cached singleton skillroomVC to show");
+            [self.navigationController pushViewController:appDelegate.skillroom_singleVC  animated:(YES)];
         }
         
     }
